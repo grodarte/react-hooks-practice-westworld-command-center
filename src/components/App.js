@@ -7,8 +7,7 @@ import Headquarters from "./Headquarters"
 function App() {
   const [areas, setAreas] = useState([])
   const [hosts, setHosts] = useState([])
-
-  const inactiveHosts = hosts.filter(host=>!host.active)
+  const [selectedHost, setSelectedHost] = useState("")
 
   // GET areas
   useEffect(()=>{
@@ -24,10 +23,14 @@ function App() {
     .then(hostsData=>setHosts(hostsData))
   }, [])
 
+  function handleSelectHost(newHost){
+    setSelectedHost(newHost)
+  }
+
   return (
     <Segment id="app">
-      <WestworldMap areas={areas} hosts={hosts}/>
-      <Headquarters hosts={hosts}/>
+      <WestworldMap areas={areas} hosts={hosts} selectedHost={selectedHost} onSelectHost={handleSelectHost}/>
+      <Headquarters areas={areas} hosts={hosts} selectedHost={selectedHost} onSelectHost={handleSelectHost}/>
     </Segment>
   );
 }
