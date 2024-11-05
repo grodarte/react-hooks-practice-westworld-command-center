@@ -2,7 +2,7 @@ import React from "react";
 import "../stylesheets/Area.css";
 import HostList from "./HostList"
 
-function Area({ area }) {
+function Area({ area, hosts }) {
   const {id, name, limit, auth_req} = area
 
   return (
@@ -15,16 +15,16 @@ function Area({ area }) {
           return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         }).join(" ")}
       </h3>
-      <HostList/>
+      <HostList limit={limit} hosts={hosts}/>
     </div>
   );
 }
 
 Area.propTypes = {
-  hosts: function (props) {
-    if (props.hosts.length > props.limit) {
+  hosts: function (hosts, limit, name) {
+    if (hosts.length > limit) {
       throw Error(
-        `HEY!! You got too many hosts in ${props.name}. The limit for that area is ${props.limit}. You gotta fix that!`
+        `HEY!! You got too many hosts in ${name}. The limit for that area is ${limit}. You gotta fix that!`
       );
     }
   },
